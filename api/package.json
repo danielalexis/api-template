@@ -1,0 +1,18 @@
+{
+  "name": "lbapi",
+  "description": "Load Balancer API",
+  "version": "0.0.0",
+  "build": "4",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "debug": "DEBUG=express:* node ./bin/www",
+    "bump": "node ./bin/bump"
+  },
+  "dependencies": {
+    "debug": "latest",
+    "express": "latest",
+    "http-errors": "latest",
+    "walk-sync": "latest"
+  }
+}
