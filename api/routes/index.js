@@ -15,10 +15,12 @@ fs.readFile('package.json', (err, data) => {
 router.get('/', function(req, res, next) {
   //  Does "build" in package.json not break anything?
   //  IDK but I' guessing eventually we're gonna find out
+
+  //  Doesn't break but looks ugly so i removed it
   res.json(
   {
     "version": pkg_info.version,
-    "build": pkg_info.build
+    "codename": pkg.codename
   }
   );
 });

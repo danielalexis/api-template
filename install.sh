@@ -47,7 +47,8 @@ apt install nginx nodejs php8.0  -y > /dev/null
 
 
 # Make all folders
-mkdir -p /var/equilibrium/ssl/
-mkdir -p /var/equilibrium/data/
-mkdir -p /var/equilibrium/api/
-mkdir -p /var/equilibrium/web/
+mkdir -p /etc/equilibrium/ssl/
+mkdir -p /etc/equilibrium/data/
+mkdir -p /etc/equilibrium/api/
+mkdir -p /etc/equilibrium/web/
+mkdir -p /etc/equilibrium/conf/

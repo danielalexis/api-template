@@ -1,42 +1,58 @@
+const { strict } = require('assert/strict');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs')
 const createError = require('http-errors');
 
 
-
-
 router.post('/', function(req, res, next) {
     //console.log(req.body.d)
-    if (!req.body.domain) {
-        //res.json({"code": 406, "error.message": "Unauthorized"})
-        next(createError(406, 'Missing data'))
-        return
+    const domain = req.body.domain // indicates the domain
+    const type = req.body.type // indicates the type of config to be used (proxy or loadbalancer)
+
+    if (!domain && !type) {
+        next(createError(406, 'Missing required data'));
+        return;
     }
 
 
-    fs.readFile('conf/example_ssl.conf', (err, data) => {
-        if (err) {
-          console.error(err)
-          return
+
+    if (type == "proxy") {
+        if (!req.body.proxy_url) {
+            next(createError(406, "Missing parameter data"));
+            return;
+        } else {
+            // Check if proxyip is a valid http url
+            // TODO
+            const proxy_url = req.body.proxy_url;
         }
-        data = data.toString().replace(/<domain>/g, req.body.domain)
-        
-        fs.writeFile('conf/test.conf', data, err => {
+        fs.readFile("/etc/equilibrium/conf/template/proxy_ssl.conf", (err, data) => {
             if (err) {
-            console.error(err)
-            return
+                console.error(err);
+                next(createError(500, "Error while processing your requesting"));
+                return;
             }
-            //file written successfully
-        })
-        res.send(data)
-    })
+
+            data = data.toString().replace(/<domain>/g, domain);
+            data = data.toString().replace(/http:\/\/example.com/g, proxy_url);
+            fs.writeFile('/etc/nginx/sites-available/' + domain + ".conf", data, err => {
+                if (err) {
+                    console.error(err)
+                    next(createError(500, "Error while processing your requesting"))
+                    return
+                }
+                res.status(200);
+                res.send({"sucess": "sucess"})
+            })
+        });
+    }
+
     
 });
 
 router.all('/', function(req, res, next) {
     //console.log(req.body.d)
-    res.send("other method")
+    next(createError()) // Error for methods not suported
 });
 
 module.exports = router;

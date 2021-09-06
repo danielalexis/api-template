@@ -10,13 +10,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(function (req, res, next){
-  if (!req.header('Authorization')) {
-    res.status(401)
-    res.send({"code": 401, "error.message": "Unauthorized"}) //this has to be cstom because something about the middleware
-    return
-  } else {
+  // Authentication Middleware
+  // This will overwrite any other http error code including 404
+  
+  // Needs testing on if createError works here
+  if (req.header('Authorization') == "API-KEY") {
     next()
   }
+  else if (!req.header("Authorization")) {
+    res.status(401)
+    res.send({"code": 401, "error.message": "Unauthorized"})
+    return
+  }  else {
+    res.status(500)
+    res.send({"code": 500, "error.message": "An error occurred While processing your request"})
+    return
+  }
+
   
 });
 
