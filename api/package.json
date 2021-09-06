@@ -1,8 +1,7 @@
 {
-  "name": "lbapi",
-  "description": "Load Balancer API",
+  "name": "equilibrium-api",
+  "description": "Equilibrium API",
   "version": "0.0.0",
-  "build": "4",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
