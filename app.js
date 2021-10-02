@@ -1,6 +1,5 @@
 const createError = require('http-errors');
 const express = require('express');
-const fs = require('fs');
 const walkSync = require('walk-sync');
 
 const app = express();
@@ -15,16 +14,16 @@ app.use(function (req, res, next){
   
   // Needs testing on if createError works here
   if (req.header('Authorization') == "API-KEY") {
-    next()
+    next();
   }
   else if (!req.header("Authorization")) {
-    res.status(401)
-    res.send({"code": 401, "error.message": "Unauthorized"})
-    return
+    res.status(401);
+    res.send({"code": 401, "error.message": "Unauthorized"});
+    return;
   }  else {
-    res.status(500)
-    res.send({"code": 500, "error.message": "An error occurred While processing your request"})
-    return
+    res.status(500);
+    res.send({"code": 500, "error.message": "An error occurred While processing your request"});
+    return;
   }
 
   
@@ -32,13 +31,13 @@ app.use(function (req, res, next){
 
 
 dir = "./routes/"
-const paths = walkSync(dir, { directories: false }) //Express doesn't like async stuff
+const paths = walkSync(dir, { directories: false }); //Express doesn't like async stuff
 paths.forEach(function (value, index, array) {
-  value = value.slice(0, -3) //removes .js, assuming all files are .js
+  value = value.slice(0, -3); //removes .js, assuming all files are .js
   if (value == "index") {
-    app.use("/", require(dir + value))
+    app.use("/", require(dir + value));
   } else {
-    app.use("/" + value, require(dir + value))
+    app.use("/" + value, require(dir + value));
   }
 })
 

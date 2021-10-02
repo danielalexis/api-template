@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "debug": "DEBUG=express:* node ./bin/www",
-    "bump": "node ./bin/bump"
+    "debug": "DEBUG=express:* node ./bin/www"
   },
   "dependencies": {
     "debug": "latest",
