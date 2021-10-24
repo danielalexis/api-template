@@ -1,16 +1,9 @@
-# Equilibrium
-> **WARNING**: This the API for Equilibrium. If you are looking for all components (WEB + API) use the full repo [located here](https://github.com/danielalexis/equilibrium)
+# API template
 
-Open-source Proxy/Load Balancer Manager
 
-# Development:
-## Run:
-```sh
-npm run start
-```
-## Debug
-### Express Debugging:
-> Serves to debug Express routes and middleware
-```sh
-npm run debug-express
-```
+Example:
+* file: /routes/test/index.js
+* route: /test/
+---
+* file: /routes/test/hello.js
+* route: /test/hello

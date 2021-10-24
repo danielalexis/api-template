@@ -17,12 +17,10 @@ app.use(function (req, res, next){
     next();
   }
   else if (!req.header("Authorization")) {
-    res.status(401);
-    res.send({"code": 401, "error.message": "Unauthorized"});
+    next(createError(401));
     return;
   }  else {
-    res.status(500);
-    res.send({"code": 500, "error.message": "An error occurred While processing your request"});
+    next(createError(500));
     return;
   }
 
@@ -33,11 +31,15 @@ app.use(function (req, res, next){
 dir = "./routes/"
 const paths = walkSync(dir, { directories: false }); //Express doesn't like async stuff
 paths.forEach(function (value, index, array) {
-  value = value.slice(0, -3); //removes .js, assuming all files are .js
-  if (value == "index") {
-    app.use("/", require(dir + value));
+  value_nojs = value.slice(0, -3); //removes .js, assuming all files are .js
+  //value_index = value.slice(0, -8); //removes .js, assuming all files are .js
+  //console.log(value_index)
+
+  if (value.endsWith("index.js")) {
+    value_index = value.slice(0, -8);
+    app.use("/" + value_index, require(dir + value_nojs));
   } else {
-    app.use("/" + value, require(dir + value));
+    app.use("/" + value_nojs, require(dir + value_nojs));
   }
 })
 

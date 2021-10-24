@@ -1,6 +1,6 @@
 {
-  "name": "equilibrium-api",
-  "description": "Equilibrium API",
+  "name": "apitemplate",
+  "description": "API Template",
   "version": "0.0.0",
   "private": true,
   "scripts": {
