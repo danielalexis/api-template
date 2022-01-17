@@ -37,7 +37,8 @@ paths.forEach(function (value, index, array) {
 
   if (value.endsWith("index.js")) {
     value_index = value.slice(0, -8);
-    app.use("/" + value_index, require(dir + value_nojs));
+    app.use("/" + value_index, require(dir + value_nojs)); // Route: /test
+    app.use("/" + value_nojs, require(dir + value_nojs));  // Route: /test/index
   } else {
     app.use("/" + value_nojs, require(dir + value_nojs));
   }
